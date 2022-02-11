@@ -1,0 +1,29 @@
+services:
+
+  # Django
+  web:
+    env_file: ./config/.prod.env
+    restart: always
+    labels:
+      - "traefik.http.routers.web.rule=Host(`${BLOGSLEY_DOMAIN}`, `www.${BLOGSLEY_DOMAIN}`)"
+      - traefik.http.routers.web.tls=true
+      - traefik.http.routers.web.tls.certresolver=le
+      # Redirect all HTTP to HTTPS permanently
+      - traefik.http.routers.http_catchall.rule=HostRegexp(`{any:.+}`)
+      - traefik.http.routers.http_catchall.entrypoints=web
+      - traefik.http.routers.http_catchall.middlewares=https_redirect
+      - traefik.http.middlewares.https_redirect.redirectscheme.scheme=https
+      - traefik.http.middlewares.https_redirect.redirectscheme.permanent=true
+
+  # Database
+  db:
+    env_file: ./config/.prod.env
+    restart: always
+
+  dbbackup:
+    env_file: ./config/.prod.env
+    restart: always
+
+  traefik:
+    env_file: ./config/.prod.env
+    restart: always

@@ -1,0 +1,18 @@
+entity: User
+items:
+  user0:
+    username: admin
+    firstName: Admin
+    lastName: Admin
+    email: admin@example.org
+    __call:
+      setPassword:
+        - admin
+  user1:
+    username: alice
+    firstName: Alice
+    lastName: Alice
+    email: alice@example.org
+    __call:
+      setPassword:
+        - admin
