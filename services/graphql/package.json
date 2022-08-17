@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auto-relay/typeorm": "^0.14.0",
+    "@graphile/pg-pubsub": "^4.12.2",
     "auto-relay": "^0.14.0",
     "bcrypt": "^5.0.1",
     "class-validator": "^0.13.2",

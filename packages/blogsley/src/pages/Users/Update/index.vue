@@ -1,12 +1,7 @@
 <template>
   <q-page padding>
     <div v-if="$apollo.loading">Loading..</div>
-    <div v-else class="fields">
-      <q-input outlined autocomplete="username" v-model="user.username" label="Username" />
-      <q-input outlined autocomplete="email" v-model="user.email" label="Email" />
-      <q-input outlined autocomplete="firstname" v-model="user.firstName" label="First Name" />
-      <q-input outlined autocomplete="lastname" v-model="user.lastName" label="Last Name" />
-    </div>
+    <Form :user="this.userById" />
   </q-page>
 </template>
 
@@ -14,13 +9,14 @@
 import { UiMixin, PageMixin } from '@mixins'
 import Navbox from './Navbox.vue'
 import Header from './Header.vue'
+import Form from '../Form.vue'
 
 import gql from 'graphql-tag'
 const directives = import.meta.env.VITE_STANDALONE ? '@client' : ''
 
 const userQuery = gql`
-query userQuery($id: ID!) {
-  user(id: $id) ${directives} {
+query userQuery($id: UUID!) {
+  userById(id: $id) ${directives} {
     username
     email
     firstName
@@ -32,9 +28,10 @@ export default {
   mixins: [UiMixin, PageMixin],
   props: ['id'],
   components: {
+    Form
   },
   apollo: {
-    user: {
+    userById: {
       query: userQuery,
       variables () {
         return {
